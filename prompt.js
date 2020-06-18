@@ -87,6 +87,7 @@ const updateEERole = [
 //remove department
 
 module.exports = master;
+module.exports = addRole;
 module.exports = addEmployee;
 module.exports = addDepartment;
 module.exports = updateEERole;

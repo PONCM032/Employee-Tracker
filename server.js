@@ -1,3 +1,25 @@
+var mysql = require("mysql");
+
+var connection = mysql.createConnection({
+    host: "localhost",
+  
+    // Your port; if not 3306
+    port: 3306,
+  
+    // Your username
+    user: "root",
+  
+    // Your password
+    password: "password",
+    database: "ee_tracker_db"
+  });
+  
+  connection.connect(function(err) {
+    if (err) throw err;
+    console.log("connected as id " + connection.threadId + "\n");
+    //start function
+  });
+
 //employees roles departmens
     //make some tables
         //employees (most difficult table)
@@ -23,23 +45,21 @@
             //utilized budget
                 //adding up all employees salaries in the employees table per department
 
-//  views
+// views
     //view all
         //has
             //first name
             //last name
             //join role which gets your title department salary
             //manager column will be an id that join to the employee tbale, not inner joing
-
-
-//by department
-        //has
-            //first name
-            //last name
-            //title
-    //manager
-        //pick an employee and see their direct reports
-            //matching the selected employees id to all the employees where the manager id matches the selcted id
+        //by department
+            //has
+                //first name
+                //last name
+                //title
+        //manager
+            //pick an employee and see their direct reports
+                //matching the selected employees id to all the employees where the manager id matches the selcted id
 
 
 //inserts
