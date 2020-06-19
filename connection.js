@@ -2,14 +2,8 @@ var mysql = require("mysql");
 
 var connection = mysql.createConnection({
     host: "localhost",
-  
-    // Your port; if not 3306
     port: 3306,
-  
-    // Your username
     user: "root",
-  
-    // Your password
     password: "password",
     database: "ee_tracker_db"
   });
@@ -20,6 +14,7 @@ var connection = mysql.createConnection({
     //start function
   });
 
+  module.exports = connection;
 //employees roles departmens
     //make some tables
         //employees (most difficult table)
