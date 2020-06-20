@@ -69,16 +69,11 @@ function start() {
 //View All Functions
 
 function viewAllEes() {
-  connection.query("SELECT * FROM employee", function (err, data) {
+  connection.query("SELECT * FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department on department.id = role.department_id", function (err, data) {
     if (err) throw err;
     for (var i = 0; i < data.length; i++) {
-      console.log(
-        data[i].id +
-          " | " +
-          data[i].first_name +
-          " " +
-          data[i].last_name +
-          " | "
+      console.table([{First: data[i].first_name, Last:data[i].last_name, Role: data[i].title, Department: data[i].name, Salary: data[i].salary, Manager: "?" }]
+        
       );
     }
     start();
@@ -86,19 +81,10 @@ function viewAllEes() {
 }
 
 function viewAllRl() {
-  connection.query("SELECT * FROM role", function (err, data) {
+  connection.query("SELECT * FROM role LEFT JOIN department ON role.department_id = department.id", function (err, data) {
     if (err) throw err;
     for (var i = 0; i < data.length; i++) {
-      console.log(
-        data[i].id +
-          " | " +
-          data[i].title +
-          " | " +
-          data[i].salary +
-          " | " +
-          data[i].department_id +
-          " | "
-      );
+      console.table([{Role: data[i].title, Salary: data[i].salary, Department: data[i].name}]);
     }
     start();
   });
@@ -108,7 +94,7 @@ function viewAllDept() {
   connection.query("SELECT * from department", function (err, data) {
     if (err) throw err;
     for (var i = 0; i < data.length; i++) {
-      console.log(data[i].id + " | " + data[i].name + " | " + data[i].budget);
+      console.table([{Department: data[i].name, Budget: data[i].budget}]);
     }
     start();
   });
