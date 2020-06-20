@@ -104,6 +104,7 @@ function viewAllDept() {
 
 function updateRole() {
     inquirer.prompt(UpdateEeRl).then(function(answer) {
+
         console.log(answer);
         start();
     })
@@ -127,8 +128,11 @@ function addRole() {
 
 function addDepartment() {
   inquirer.prompt(addDepartmentArr).then(function (answer) {
-    console.log(answer);
-    start();
+    connection.query("INSERT INTO department (name) VALUES (?)",[answer.addDepartment], function (err, data) {
+        if (err) throw err;
+        console.log("Thank you for adding a new department!")
+      });
+      start();
   });
 }
 
@@ -190,7 +194,12 @@ const UpdateEeRl = [
     name: "updateRole",
     type: "list",
     message: "Which employee would you like to update?",
-    choices: ["A", "B"],
+    choices: function(answer) {
+        connection.query("SELECT id, first_name, last_name FROM employee", function(err, data){
+            if (err) throw err;
+            return data;
+        })
+    },
   },
   {
     name: "newRole",
