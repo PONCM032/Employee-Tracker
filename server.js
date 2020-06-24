@@ -1,6 +1,8 @@
 var inquirer = require("inquirer");
 var connection = require("./connection");
 
+var namesArr = [];
+
 console.log(`
 ::::::::::   :::   :::   :::::::::  :::        ::::::::  :::   ::: :::::::::: :::::::::: 
 :+:         :+:+: :+:+:  :+:    :+: :+:       :+:    :+: :+:   :+: :+:        :+:         
@@ -189,17 +191,30 @@ const addDepartmentArr = [
   },
 ];
 
+//Choice Array
+function getFullName(item) {
+    var fullname = [item.first_name,item.last_name].join(" ");
+    return fullname;
+  };
+
+function getNames() {
+    connection.query("SELECT id, first_name, last_name FROM employee", function(err, data){
+             namesArr.push(data.map(({id, first_name, last_name}) => ({
+                name: `${first_name} ${last_name}`,
+                value: id
+            })))
+            ;
+        }) 
+};
+
+console.log(namesArr)
+
 const UpdateEeRl = [
   {
     name: "updateRole",
     type: "list",
     message: "Which employee would you like to update?",
-    choices: function(answer) {
-        connection.query("SELECT id, first_name, last_name FROM employee", function(err, data){
-            if (err) throw err;
-            return data;
-        })
-    },
+    choices: namesArr
   },
   {
     name: "newRole",
@@ -211,3 +226,4 @@ const UpdateEeRl = [
 
 //Callback Function
 start();
+getNames();
